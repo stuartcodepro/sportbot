@@ -1,2 +1,2 @@
-# sportbot
+# Sport Bot
 This is the sportbot AI project repository 
