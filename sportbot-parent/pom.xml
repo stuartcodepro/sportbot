@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sportbot</groupId>
+		<artifactId>sportbot</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>sportbot-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<properties>
+		<version.cdi-api>1.2</version.cdi-api>
+		<version.javax-persistence>1.0.2</version.javax-persistence>
+		<version.javax-servlet>2.5</version.javax-servlet>
+		<version.jboss-ejb>1.0.2.Final</version.jboss-ejb>
+		<version.jboss-jaxrs>1.0.0.Final</version.jboss-jaxrs>
+		<version.jboss-jee>1.0.3.Final</version.jboss-jee>
+		<version.json-simple>1.1.1</version.json-simple>
+		<version.liquibase>3.4.1</version.liquibase>
+		<!-- Prefer versions specified in Wildfly BOM, only add additional dependencies 
+			or override where necessary -->
+		<version.wildfly.bom>8.2.2.Final</version.wildfly.bom>
+
+		<jdk.source>1.8</jdk.source>
+		<jdk.target>1.8</jdk.target>
+		<jdk.debug>true</jdk.debug>
+		<jdk.optimize>false</jdk.optimize>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Socialite modules -->
+			<dependency>
+				<groupId>com.sportbot</groupId>
+				<artifactId>sportbot-api</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sportbot</groupId>
+				<artifactId>sportbot-datamodel</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sportbot</groupId>
+				<artifactId>sportbot-core</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sportbot</groupId>
+				<artifactId>sportbot-rs</artifactId>
+				<type>war</type>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Dependency Management for Wildfly dependencies -->
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-all</artifactId>
+				<version>${version.wildfly.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Dependency management for Java EE APIs -->
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-7.0</artifactId>
+				<version>${version.jboss-jee}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-core</artifactId>
+				<version>${version.liquibase}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<source>${jdk.source}</source>
+					<target>${jdk.target}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<debug>${jdk.debug}</debug>
+					<optimize>${jdk.optimize}</optimize>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>

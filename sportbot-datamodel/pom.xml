@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sportbot</groupId>
+		<artifactId>sportbot-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../sportbot-parent</relativePath>
+	</parent>
+	<artifactId>sportbot-datamodel</artifactId>
+
+	<dependencies>
+
+		<!-- Module dependencies -->
+		<dependency>
+			<groupId>com.socialite</groupId>
+			<artifactId>socialite-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		
+		<dependency>
+       		<groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+	</dependencies>
+	
+	<profiles>
+
+        <profile>
+            <id>liquibase</id>
+
+            <properties>
+                <liquibase.db.url>jdbc:postgresql://localhost:5432/socialite?useUnicode=true&amp;characterEncoding=utf8</liquibase.db.url>
+                <liquibase.db.driver>org.postgresql.Driver</liquibase.db.driver>
+                <liquibase.db.schema>socialite_refactor</liquibase.db.schema>
+                <liquibase.prompt.nonlocal>true</liquibase.prompt.nonlocal>
+            </properties>
+			
+            <dependencies>
+                <dependency>
+                    <groupId>postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>9.1-901-1.jdbc4</version>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <configuration>
+                            <changeLogFile>src/main/resources/liquibase/master.changelog.xml</changeLogFile>
+                            <driver>${liquibase.db.driver}</driver>
+                            <url>${liquibase.db.url}</url>
+                            <!-- Ensure you add a server to your settings.xml -->
+                            <server>socialite.db</server>
+                            <defaultSchemaName>${liquibase.db.schema}</defaultSchemaName>
+                            <context>sample</context>
+                            <promptOnNonLocalDatabase>${liquibase.prompt.nonlocal}</promptOnNonLocalDatabase>
+                            <outputChangeLogFile>src/main/resources/liquibase/1.0.0/socialite.tables.changelog.xml</outputChangeLogFile>
+                            <defaultSchemaName>socialite_refactor</defaultSchemaName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
+
+</project>
